@@ -38,3 +38,9 @@
   align-items: center;
   justify-content: center;
 }
+
+@media (max-width: 700px) {
+  .brand > h4 {
+    display: none;
+  }
+}
