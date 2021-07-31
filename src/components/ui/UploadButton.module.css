@@ -1,0 +1,19 @@
+.uploadButton {
+  cursor: pointer;
+  border: none;
+  padding: 15px 30px;
+  width: 152px;
+  height: 54px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #202142;
+  color: white;
+  border-radius: 10px;
+  margin-left: 1rem;
+}
+
+.uploadButton > i {
+  margin-right: 0.2rem;
+}
