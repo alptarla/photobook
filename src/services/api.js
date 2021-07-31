@@ -1,6 +1,6 @@
 import { db } from './firebase'
 
-export async function fetchPhotos() {
+export async function fetchPosts() {
   const collection = db.collection('photos')
   const data = await collection.get()
 

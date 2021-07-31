@@ -6,7 +6,7 @@ import GoogleButton from '../ui/GoogleButton'
 import UploadButton from '../ui/UploadButton'
 import classes from './Header.module.css'
 
-const isAuthenticated = true
+const isAuthenticated = false
 
 function Header() {
   const handleUploadClick = () => {

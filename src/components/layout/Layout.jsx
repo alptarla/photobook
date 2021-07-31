@@ -10,7 +10,7 @@ function Layout({ children }) {
         <Header />
       </header>
       <main className={classes.main}>{children}</main>
-      <footer>
+      <footer className={classes.footer}>
         <Footer />
       </footer>
     </div>

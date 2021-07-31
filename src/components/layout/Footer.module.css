@@ -1,0 +1,16 @@
+.footer {
+  background-color: #fcfcff;
+  border-top: 1px #efefff solid;
+}
+
+.footerContent {
+  display: flex;
+  align-items: center;
+}
+
+.footerContent p {
+  font-size: 16px;
+  color: #202142;
+  opacity: 0.8;
+  margin-left: 0.5rem;
+}
