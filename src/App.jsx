@@ -1,13 +1,16 @@
 import React from 'react'
+import { Route, Switch } from 'react-router-dom'
 import Layout from './components/layout/Layout'
-import Container from './components/ui/Container'
+import Home from './pages/Home'
 
 function App() {
   return (
     <Layout>
-      <Container>
-        <div>Photobook | Home</div>
-      </Container>
+      <Switch>
+        <Route exact path='/'>
+          <Home />
+        </Route>
+      </Switch>
     </Layout>
   )
 }
