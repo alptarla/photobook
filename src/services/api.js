@@ -29,6 +29,23 @@ export async function toggleLikePost({ isLiked, postId, email }) {
   return { id: doc.id, ...doc.data() }
 }
 
+export async function toggleBookmarkPost({ isBookmarked, postId, email }) {
+  const collection = db.collection('users')
+
+  const doc = await collection.where('email', '==', email).get()
+
+  await collection.doc(doc.docs[0].id).update({
+    bookmarks: !isBookmarked
+      ? FieldValue.arrayRemove(postId)
+      : FieldValue.arrayUnion(postId),
+  })
+
+  return {
+    id: doc.docs[0].id,
+    ...doc.docs[0].data(),
+  }
+}
+
 export async function signInWithGoogle() {
   const provider = new GoogleAuthProvider()
   const res = await auth.signInWithPopup(provider)
@@ -39,9 +56,12 @@ export async function signInWithGoogle() {
     (d) => d.data.email === res.user.providerData[0].email
   )
   if (!existingUser)
-    collection.add({ bookmarks: [], ...res.user.providerData[0] })
+    await collection.add({ bookmarks: [], ...res.user.providerData[0] })
 
-  return res.user.providerData[0]
+  return {
+    id: usersData.docs[0].id,
+    ...usersData.docs[0].data(),
+  }
 }
 
 export async function fetchUserByEmail(email) {

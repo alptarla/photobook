@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPosts, selectPost, toggleLikePost } from '../../store/slices/post'
-import { selectUser } from '../../store/slices/user'
+import { selectUser, toggleBookmarkPost } from '../../store/slices/user'
 import PostItem from './PostItem'
 import classes from './PostList.module.css'
 
@@ -14,8 +14,8 @@ function PostList() {
     dispatch(getPosts())
   }, [dispatch])
 
-  const handleToggleBookmark = () => {
-    // toggle bookmark
+  const handleToggleBookmark = ({ isBookmarked, postId, email }) => {
+    dispatch(toggleBookmarkPost({ isBookmarked, postId, email }))
   }
 
   const handleToggleLike = ({ isLiked, postId, email }) => {

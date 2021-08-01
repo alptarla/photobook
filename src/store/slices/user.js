@@ -12,6 +12,13 @@ export const signOut = createAsyncThunk('post/signOut', () => {
   return apiService.signOut()
 })
 
+export const toggleBookmarkPost = createAsyncThunk(
+  'post/toggleBookmarkPost',
+  ({ email, postId, isBookmarked }) => {
+    return apiService.toggleBookmarkPost({ isBookmarked, email, postId })
+  }
+)
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -54,6 +61,12 @@ const userSlice = createSlice({
       state.isAuthenticated = false
 
       localStorage.removeItem('user')
+    },
+    [toggleBookmarkPost.fulfilled](state, action) {
+      state.user = action.payload
+    },
+    [toggleBookmarkPost.rejected](state, action) {
+      state.error = action.error.message
     },
   },
 })

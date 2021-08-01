@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { fetchUserByEmail } from '../services/api'
 import { auth } from '../services/firebase'
 
 function useCurrentUser() {
@@ -9,7 +10,7 @@ function useCurrentUser() {
     const storedUser = JSON.parse(localStorage.getItem('user'))
     if (storedUser) setUser(storedUser)
 
-    auth.onAuthStateChanged((user, err) => {
+    auth.onAuthStateChanged(async (user, err) => {
       if (err) {
         setError(err.message)
         localStorage.removeItem('user')
@@ -17,7 +18,8 @@ function useCurrentUser() {
         return
       }
 
-      setUser(user?.providerData[0])
+      const userData = await fetchUserByEmail(user.providerData[0].email)
+      setUser(userData)
     })
   }
 

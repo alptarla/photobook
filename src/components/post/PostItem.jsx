@@ -14,11 +14,17 @@ function PostItem({ post, user, toggleBookmark, toggleLike }) {
 
   const handleToggleBookmark = () => {
     setIsBookmarked((prev) => !prev)
-    toggleBookmark(!isBookmarked)
+
+    toggleBookmark({
+      postId: post.id,
+      email: user.email,
+      isBookmarked: !isBookmarked,
+    })
   }
 
   const handleToggleLike = () => {
     setIsLiked((prev) => !prev)
+
     toggleLike({ postId: post.id, email: user.email, isLiked: !isLiked })
   }
 
