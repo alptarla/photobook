@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 import Layout from './components/layout/Layout'
 import useCurrentUser from './hooks/useCurrentUser'
 import Home from './pages/Home'
@@ -18,6 +19,11 @@ function App() {
 
   return (
     <Layout>
+      <ToastContainer
+        position='top-right'
+        autoClose={3000}
+        hideProgressBar={true}
+      />
       <Switch>
         <Route exact path='/'>
           <Home />

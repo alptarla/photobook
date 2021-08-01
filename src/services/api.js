@@ -1,16 +1,28 @@
 import { auth, db, FieldValue, GoogleAuthProvider } from './firebase'
 
-export async function fetchPosts() {
+export async function fetchPosts(filters) {
   const collection = db.collection('photos')
   const data = await collection.get()
 
-  const posts = data.docs.map((d) => ({ id: d.id, ...d.data() }))
+  let posts = data.docs.map((d) => ({ id: d.id, ...d.data() }))
   await Promise.all(
     posts.map(
       async (post, index) =>
         (posts[index].user = await fetchUserByEmail(post.user))
     )
   )
+
+  if (filters.searchTerms !== '') {
+    const searchRegexp = new RegExp(filters.searchTerms, 'i')
+
+    posts = posts.filter((p) => p.description.match(searchRegexp))
+  }
+
+  if (filters.sort.includes('+')) {
+    posts = posts.sort((a, b) => a.likes.length - b.likes.length)
+  } else {
+    posts = posts.sort((a, b) => b.likes.length - a.likes.length)
+  }
 
   return posts
 }

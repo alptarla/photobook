@@ -1,10 +1,11 @@
 import classNames from 'classnames'
 import moment from 'moment'
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 import Avatar from '../ui/Avatar'
 import classes from './PostItem.module.css'
 
-function PostItem({ post, user, toggleBookmark, toggleLike }) {
+function PostItem({ post, user, isAuthenticated, toggleBookmark, toggleLike }) {
   const [isLiked, setIsLiked] = useState(
     () => post?.likes?.some((e) => user.email) || false
   )
@@ -13,6 +14,11 @@ function PostItem({ post, user, toggleBookmark, toggleLike }) {
   )
 
   const handleToggleBookmark = () => {
+    if (!isAuthenticated) {
+      toast.warning('You must sign in first!')
+      return
+    }
+
     setIsBookmarked((prev) => !prev)
 
     toggleBookmark({
@@ -23,6 +29,11 @@ function PostItem({ post, user, toggleBookmark, toggleLike }) {
   }
 
   const handleToggleLike = () => {
+    if (!isAuthenticated) {
+      toast.warning('You must sign in first!')
+      return
+    }
+
     setIsLiked((prev) => !prev)
 
     toggleLike({ postId: post.id, email: user.email, isLiked: !isLiked })
@@ -53,6 +64,9 @@ function PostItem({ post, user, toggleBookmark, toggleLike }) {
         <div>
           <i className={likeClass} onClick={handleToggleLike} />
           <i className={bookmarkClass} onClick={handleToggleBookmark} />
+          <div>
+            <small>{post.likes.length} likes</small>
+          </div>
         </div>
         <span className={classes.createdAt}>{createdAt}</span>
       </div>

@@ -1,4 +1,12 @@
-.postList {
+.verticalLayout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.horizontalLayout {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   justify-content: center;
@@ -7,13 +15,13 @@
 }
 
 @media (max-width: 1300px) {
-  .postList {
+  .horizontalLayout {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 900px) {
-  .postList {
+  .horizontalLayout {
     grid-template-columns: 1fr;
   }
 }

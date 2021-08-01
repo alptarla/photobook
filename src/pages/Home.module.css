@@ -1,0 +1,61 @@
+.postListHeader {
+  background-color: #fcfcff;
+  border-radius: 0.5rem;
+  border: 1px #efefff solid;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}
+
+.headerEnd {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search,
+.sort {
+  outline: none;
+  padding: 0.7rem;
+  border: 1px #efefff solid;
+  border-radius: 0.2rem;
+  background-color: #ffff;
+  color: #202142;
+}
+
+.search {
+  max-width: 25rem;
+  width: 100%;
+  margin-right: 1rem;
+}
+
+.sort {
+  margin-right: 2rem;
+}
+
+.layoutChanger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px #efefff solid;
+  border-radius: 0.2rem;
+  padding: 0.5rem;
+  background-color: #ffff;
+  color: #202142;
+}
+
+.layoutChanger i {
+  margin-right: 1rem;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.layoutChanger i:last-child {
+  margin-right: 0;
+}
+
+.activeLayout {
+  color: rgb(0, 170, 170);
+}
