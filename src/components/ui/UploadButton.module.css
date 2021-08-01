@@ -9,7 +9,7 @@
   background-color: #202142;
   color: white;
   border-radius: 10px;
-  margin-left: 1rem;
+  margin: 0 1rem;
 }
 
 .uploadButton > i {

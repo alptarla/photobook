@@ -1,14 +1,28 @@
 import React from 'react'
 import classes from './Avatar.module.css'
 
-function Avatar({ text }) {
-  const content = text
-    .toUpperCase()
-    .split(' ')
-    .map((t) => t[0])
-    .join('')
+function Avatar({ text, src }) {
+  let content
+  let isImage
 
-  return <div className={classes.avatar}>{content}</div>
+  if (text) {
+    content = text
+      .toUpperCase()
+      .split(' ')
+      .map((t) => t[0])
+      .join('')
+
+    isImage = false
+  } else if (src) {
+    content = src
+    isImage = true
+  }
+
+  return (
+    <div className={classes.avatar}>
+      {isImage ? <img src={content} alt='avatar' /> : content}
+    </div>
+  )
 }
 
 export default Avatar

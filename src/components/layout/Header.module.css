@@ -40,6 +40,12 @@
   justify-content: center;
 }
 
+.signOutButton {
+  cursor: pointer;
+  font-size: 24px;
+  color: #202142;
+}
+
 @media (max-width: 700px) {
   .brand > h4 {
     display: none;
