@@ -4,29 +4,27 @@ import React, { useState } from 'react'
 import Avatar from '../ui/Avatar'
 import classes from './PostItem.module.css'
 
-function PostItem({
-  post,
-  toggleBookmark,
-  toggleLike,
-  isLiked = false,
-  isBookmarked = false,
-}) {
-  const [like, setLike] = useState(isLiked)
-  const [bookmark, setBookmark] = useState(isBookmarked)
+function PostItem({ post, user, toggleBookmark, toggleLike }) {
+  const [isLiked, setIsLiked] = useState(
+    () => post?.likes?.some((e) => user.email) || false
+  )
+  const [isBookmarked, setIsBookmarked] = useState(
+    () => user?.bookmarks?.some((id) => id === post.id) || false
+  )
 
   const handleToggleBookmark = () => {
-    setBookmark((prev) => !prev)
+    setIsBookmarked((prev) => !prev)
     toggleBookmark(!isBookmarked)
   }
 
   const handleToggleLike = () => {
-    setLike((prev) => !prev)
-    toggleLike(!isLiked)
+    setIsLiked((prev) => !prev)
+    toggleLike({ postId: post.id, email: user.email, isLiked: !isLiked })
   }
 
-  const likeClass = classNames({ fas: like, far: !like }, 'fa-heart')
+  const likeClass = classNames({ fas: isLiked, far: !isLiked }, 'fa-heart')
   const bookmarkClass = classNames(
-    { fas: bookmark, far: !bookmark },
+    { fas: isBookmarked, far: !isBookmarked },
     'fa-bookmark'
   )
 

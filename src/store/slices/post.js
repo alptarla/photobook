@@ -5,6 +5,13 @@ export const getPosts = createAsyncThunk('post/fetchPosts', () => {
   return apiService.fetchPosts()
 })
 
+export const toggleLikePost = createAsyncThunk(
+  'post/toggleLikePost',
+  ({ email, postId, isLiked }) => {
+    return apiService.toggleLikePost({ isLiked, email, postId })
+  }
+)
+
 const postSlice = createSlice({
   name: 'post',
   initialState: {
@@ -22,6 +29,12 @@ const postSlice = createSlice({
     },
     [getPosts.rejected](state, action) {
       state.loading = false
+      state.error = action.error.message
+    },
+    [toggleLikePost.fulfilled](state, action) {
+      state.posts = [...state.posts, action.payload]
+    },
+    [toggleLikePost.rejected](state, action) {
       state.error = action.error.message
     },
   },
