@@ -56,7 +56,7 @@ function Header() {
             {isAuthenticated ? (
               <>
                 <Link to='/profile/me'>
-                  <Avatar src={user.photoURL} />
+                  <Avatar src={user.photoURL} text={user.displayName} />
                 </Link>
                 <UploadButton onClick={handleUploadClick} />
                 <i className={signOutClass} onClick={handleSignOut} />

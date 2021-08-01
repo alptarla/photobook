@@ -5,7 +5,7 @@ function Avatar({ text, src }) {
   let content
   let isImage
 
-  if (text) {
+  if (text && !src) {
     content = text
       .toUpperCase()
       .split(' ')
@@ -20,7 +20,7 @@ function Avatar({ text, src }) {
 
   return (
     <div className={classes.avatar}>
-      {isImage ? <img src={content} alt='avatar' /> : content}
+      {isImage ? <img src={content} alt={content} /> : content}
     </div>
   )
 }

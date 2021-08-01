@@ -35,8 +35,8 @@ function PostItem({
   return (
     <div className={classes.post}>
       <div className={classes.postHeader}>
-        <Avatar text='Alp Tarla' />
-        <h4>{post.user}</h4>
+        <Avatar src={post.user.photoURL} text={post.user.displayName} />
+        <h4>{post.user.displayName}</h4>
       </div>
       <div className={classes.postBody}>
         <img

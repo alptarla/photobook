@@ -20,6 +20,10 @@ const postSlice = createSlice({
     [getPosts.pending](state) {
       state.loading = true
     },
+    [getPosts.rejected](state, action) {
+      state.loading = false
+      state.error = action.error.message
+    },
   },
 })
 
