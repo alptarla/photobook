@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import PostModal from '../components/post/PostModal'
 import Avatar from '../components/ui/Avatar'
 import Container from '../components/ui/Container'
@@ -20,7 +21,7 @@ function Profile() {
 
   const dispatch = useDispatch()
 
-  const { user } = useSelector(selectUser)
+  const { user, isAuthenticated } = useSelector(selectUser)
   const { userPosts, bookmarks, loading } = useSelector(selectPost)
 
   useEffect(() => {
@@ -67,6 +68,8 @@ function Profile() {
       />
     ))
   }
+
+  if (!isAuthenticated) return <Redirect to='/' />
 
   return (
     <Container>

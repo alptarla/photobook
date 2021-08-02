@@ -64,6 +64,7 @@ const userSlice = createSlice({
     },
     [toggleBookmarkPost.fulfilled](state, action) {
       state.user = action.payload
+      console.log(`action.payload`, action.payload)
     },
     [toggleBookmarkPost.rejected](state, action) {
       state.error = action.error.message

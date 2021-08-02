@@ -2,7 +2,7 @@ import { unwrapResult } from '@reduxjs/toolkit'
 import React, { useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Container from '../components/ui/Container'
 import Spinner from '../components/ui/Spinner'
@@ -13,17 +13,26 @@ import classes from './Upload.module.css'
 function Upload() {
   const [description, setDescription] = useState('')
   const [file, setFile] = useState(null)
+  const [image, setImage] = useState(null)
 
   const history = useHistory()
   const dispatch = useDispatch()
 
-  const { user } = useSelector(selectUser)
+  const { user, isAuthenticated } = useSelector(selectUser)
   const { loading } = useSelector(selectPost)
 
   const handleDescriptionChange = (e) => setDescription(e.target.value)
 
   const { getRootProps, getInputProps } = useDropzone({
-    onDropAccepted: (file) => setFile(file[0]),
+    onDropAccepted: (file) => {
+      setFile(file[0])
+
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        setImage(e.target.result)
+      }
+      reader.readAsDataURL(file[0])
+    },
   })
 
   const handleAddPost = () => {
@@ -50,6 +59,8 @@ function Upload() {
         toast.error(err.message || 'Something went wrong :(')
       })
   }
+
+  if (!isAuthenticated) return <Redirect to='/' />
 
   return (
     <Container>
@@ -83,6 +94,7 @@ function Upload() {
           )}
         </div>
       </div>
+      {image && <img className={classes.currentImage} src={image} />}
     </Container>
   )
 }

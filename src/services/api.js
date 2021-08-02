@@ -73,17 +73,19 @@ export async function toggleLikePost({ isLiked, postId, email }) {
 export async function toggleBookmarkPost({ isBookmarked, postId, email }) {
   const collection = db.collection('users')
 
-  const doc = await collection.where('email', '==', email).get()
+  const data = await collection.where('email', '==', email).get()
 
-  await collection.doc(doc.docs[0].id).update({
+  await collection.doc(data.docs[0].id).update({
     bookmarks: !isBookmarked
       ? FieldValue.arrayRemove(postId)
       : FieldValue.arrayUnion(postId),
   })
 
+  const doc = await collection.doc(data.docs[0].id).get()
+
   return {
-    id: doc.docs[0].id,
-    ...doc.docs[0].data(),
+    id: doc.id,
+    ...doc.data(),
   }
 }
 
