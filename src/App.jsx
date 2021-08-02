@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify'
 import Layout from './components/layout/Layout'
 import useCurrentUser from './hooks/useCurrentUser'
 import Home from './pages/Home'
+import Profile from './pages/Profile'
 import { removeUser, setUser } from './store/slices/user'
 
 function App() {
@@ -27,6 +28,9 @@ function App() {
       <Switch>
         <Route exact path='/'>
           <Home />
+        </Route>
+        <Route path='/profile/me'>
+          <Profile />
         </Route>
       </Switch>
     </Layout>

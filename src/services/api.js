@@ -27,6 +27,35 @@ export async function fetchPosts(filters) {
   return posts
 }
 
+export async function fetchUserPosts(email) {
+  const collection = db.collection('photos')
+  const { docs } = await collection.where('user', '==', email).get()
+
+  return docs.map((d) => ({ id: d.id, ...d.data() }))
+}
+
+export async function fetchUserBookmarks(userId) {
+  const collection = db.collection('users')
+  const doc = await collection.doc(userId).get()
+
+  const bookmarkIds = doc.data().bookmarks
+
+  let bookmarks = bookmarkIds.map((id) => fetchPostById(id))
+  bookmarks = await Promise.all(bookmarks)
+
+  return bookmarks
+}
+
+async function fetchPostById(id) {
+  const collection = db.collection('photos')
+  const doc = await collection.doc(id).get()
+
+  return {
+    id: doc.id,
+    ...doc.data(),
+  }
+}
+
 export async function toggleLikePost({ isLiked, postId, email }) {
   const collection = db.collection('photos')
 
@@ -65,7 +94,7 @@ export async function signInWithGoogle() {
   const collection = db.collection('users')
   const usersData = await collection.get()
   const existingUser = usersData.docs.some(
-    (d) => d.data.email === res.user.providerData[0].email
+    (d) => d.data().email === res.user.providerData[0].email
   )
   if (!existingUser)
     await collection.add({ bookmarks: [], ...res.user.providerData[0] })

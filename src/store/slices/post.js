@@ -12,10 +12,26 @@ export const toggleLikePost = createAsyncThunk(
   }
 )
 
+export const getUserPosts = createAsyncThunk(
+  'post/getUserPosts',
+  ({ email }) => {
+    return apiService.fetchUserPosts(email)
+  }
+)
+
+export const getUserBookmarks = createAsyncThunk(
+  'posts/getUserBookmarks',
+  ({ userId }) => {
+    return apiService.fetchUserBookmarks(userId)
+  }
+)
+
 const postSlice = createSlice({
   name: 'post',
   initialState: {
     posts: [],
+    userPosts: [],
+    bookmarks: [],
     loading: false,
     error: null,
   },
@@ -40,6 +56,26 @@ const postSlice = createSlice({
       )
     },
     [toggleLikePost.rejected](state, action) {
+      state.error = action.error.message
+    },
+    [getUserPosts.fulfilled](state, action) {
+      state.userPosts = action.payload
+      state.loading = false
+    },
+    [getUserPosts.pending](state) {
+      state.loading = true
+    },
+    [getUserPosts.rejected](state, action) {
+      state.error = action.error.message
+    },
+    [getUserBookmarks.fulfilled](state, action) {
+      state.bookmarks = action.payload
+      state.loading = false
+    },
+    [getUserBookmarks.pending](state) {
+      state.loading = true
+    },
+    [getUserBookmarks.rejected](state, action) {
       state.error = action.error.message
     },
   },
