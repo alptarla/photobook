@@ -6,6 +6,7 @@ import Layout from './components/layout/Layout'
 import useCurrentUser from './hooks/useCurrentUser'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
+import Upload from './pages/Upload'
 import { removeUser, setUser } from './store/slices/user'
 
 function App() {
@@ -31,6 +32,9 @@ function App() {
         </Route>
         <Route path='/profile/me'>
           <Profile />
+        </Route>
+        <Route path='/upload'>
+          <Upload />
         </Route>
       </Switch>
     </Layout>

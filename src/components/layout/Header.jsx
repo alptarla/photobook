@@ -13,10 +13,6 @@ function Header() {
   const dispatch = useDispatch()
   const { user, isAuthenticated } = useSelector(selectUser)
 
-  const handleUploadClick = () => {
-    // upload a photo
-  }
-
   const handleGoogleSignIn = () => {
     dispatch(signInWithGoogle())
   }
@@ -58,7 +54,7 @@ function Header() {
                 <Link to='/profile/me'>
                   <Avatar src={user.photoURL} text={user.displayName} />
                 </Link>
-                <UploadButton onClick={handleUploadClick} />
+                <UploadButton />
                 <i className={signOutClass} onClick={handleSignOut} />
               </>
             ) : (

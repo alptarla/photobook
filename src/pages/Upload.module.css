@@ -1,0 +1,43 @@
+.uploadLayer {
+  background-color: #fcfcff;
+  border: 3px #efefff dotted;
+  border-radius: 0.2rem;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.browseButton,
+.addPostButton {
+  outline: none;
+  border-radius: 0.2rem;
+  border: 1px solid #efefff;
+  background-color: #202142;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.addPostButton {
+  color: white;
+}
+
+.addPostButton:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.browseButton {
+  background-color: white;
+  color: #202142;
+}
+
+.descriptionInput {
+  outline: none;
+  padding: 0.5rem;
+  border: 1px solid #efefef;
+  border-radius: 0.2rem;
+  margin-bottom: 1rem;
+  margin-right: 1rem;
+}

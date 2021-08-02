@@ -1,4 +1,4 @@
-import { auth, db, FieldValue, GoogleAuthProvider } from './firebase'
+import { auth, db, FieldValue, GoogleAuthProvider, storage } from './firebase'
 
 export async function fetchPosts(filters) {
   const collection = db.collection('photos')
@@ -85,6 +85,29 @@ export async function toggleBookmarkPost({ isBookmarked, postId, email }) {
     id: doc.docs[0].id,
     ...doc.docs[0].data(),
   }
+}
+
+export async function addPost(post) {
+  const photoSrc = await uploadFile(post.src)
+
+  const collection = db.collection('photos')
+  const doc = await collection.add({ ...post, src: photoSrc })
+
+  const data = await collection.doc(doc.id).get()
+
+  return {
+    id: data.id,
+    ...data.data(),
+  }
+}
+
+async function uploadFile(file) {
+  const ref = storage.ref('photos')
+  const fileRef = ref.child(file.name)
+
+  const uploaded = await fileRef.put(file)
+
+  return uploaded.ref.getDownloadURL()
 }
 
 export async function signInWithGoogle() {

@@ -1,10 +1,13 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import classes from './UploadButton.module.css'
 
-const UploadButton = ({ onClick }) => (
-  <button className={classes.uploadButton} onClick={onClick}>
-    <i className='fas fa-upload' />
-    <span>Upload</span>
+const UploadButton = () => (
+  <button className={classes.uploadButton}>
+    <Link to='/upload'>
+      <i className='fas fa-upload' />
+      <span>Upload</span>
+    </Link>
   </button>
 )
 

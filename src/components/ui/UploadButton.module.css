@@ -7,7 +7,6 @@
   align-items: center;
   justify-content: center;
   background-color: #202142;
-  color: white;
   border-radius: 10px;
   margin: 0 1rem;
 }
@@ -16,8 +15,12 @@
   margin-right: 0.2rem;
 }
 
+.uploadButton > a {
+  color: white;
+}
+
 @media (max-width: 700px) {
-  .uploadButton > span {
+  .uploadButton span {
     display: none;
   }
 }

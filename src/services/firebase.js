@@ -1,6 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
+import 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -17,5 +18,6 @@ const db = firebase.firestore()
 const { FieldValue } = firebase.firestore
 const auth = firebase.auth()
 const { GoogleAuthProvider } = firebase.auth
+const storage = firebase.storage()
 
-export { db, FieldValue, auth, GoogleAuthProvider }
+export { db, FieldValue, auth, GoogleAuthProvider, storage }

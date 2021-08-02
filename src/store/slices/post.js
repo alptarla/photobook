@@ -26,6 +26,10 @@ export const getUserBookmarks = createAsyncThunk(
   }
 )
 
+export const addPost = createAsyncThunk('post/addPost', ({ post }) => {
+  return apiService.addPost(post)
+})
+
 const postSlice = createSlice({
   name: 'post',
   initialState: {
@@ -77,6 +81,17 @@ const postSlice = createSlice({
     },
     [getUserBookmarks.rejected](state, action) {
       state.error = action.error.message
+    },
+    [addPost.fulfilled](state, action) {
+      state.posts.push(action.payload)
+      state.loading = false
+    },
+    [addPost.pending](state) {
+      state.loading = true
+    },
+    [addPost.rejected](state, action) {
+      state.error = action.error.message
+      state.loading = false
     },
   },
 })
