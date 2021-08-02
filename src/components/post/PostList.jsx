@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import React, { useEffect, useState } from 'react'
+import { Instagram } from 'react-content-loader'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPosts, selectPost, toggleLikePost } from '../../store/slices/post'
 import { selectUser, toggleBookmarkPost } from '../../store/slices/user'
@@ -43,8 +44,6 @@ function PostList({ searchTerms, layout, sort }) {
     [classes.verticalLayout]: layout === 'vertical',
   })
 
-  if (loading) return <div>...loading</div>
-
   return (
     <div>
       <PostModal
@@ -53,17 +52,25 @@ function PostList({ searchTerms, layout, sort }) {
         post={selectedPost}
       />
       <div className={postListClass}>
-        {posts.map((post, index) => (
-          <PostItem
-            key={index}
-            post={post}
-            user={user}
-            isAuthenticated={isAuthenticated}
-            toggleBookmark={handleToggleBookmark}
-            toggleLike={handleToggleLike}
-            openModal={handleOpenModal}
-          />
-        ))}
+        {loading ? (
+          <>
+            <Instagram />
+            <Instagram />
+            <Instagram />
+          </>
+        ) : (
+          posts.map((post, index) => (
+            <PostItem
+              key={index}
+              post={post}
+              user={user}
+              isAuthenticated={isAuthenticated}
+              toggleBookmark={handleToggleBookmark}
+              toggleLike={handleToggleLike}
+              openModal={handleOpenModal}
+            />
+          ))
+        )}
       </div>
     </div>
   )

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import PostModal from '../components/post/PostModal'
 import Avatar from '../components/ui/Avatar'
 import Container from '../components/ui/Container'
+import ProfileSkeleton from '../components/ui/ProfileSkeleton'
 import {
   getUserBookmarks,
   getUserPosts,
@@ -45,6 +46,15 @@ function Profile() {
     classNames({ [classes.active]: tab === tabName })
 
   const mainContent = () => {
+    if (loading)
+      return (
+        <>
+          <ProfileSkeleton />
+          <ProfileSkeleton />
+          <ProfileSkeleton />
+        </>
+      )
+
     let content = []
     content = tab === 'posts' ? userPosts : bookmarks
 

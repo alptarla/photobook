@@ -44,7 +44,7 @@ function Header() {
               </li>
               {isAuthenticated && (
                 <li className={classes.navItem}>
-                  <Link to='/'>Profile</Link>
+                  <Link to='/profile/me'>Profile</Link>
                 </li>
               )}
               <li className={classes.navItem}>
