@@ -28,6 +28,10 @@
   font-size: 14px;
 }
 
+.postBody {
+  cursor: pointer;
+}
+
 .postAction {
   padding: 1rem;
   display: flex;

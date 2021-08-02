@@ -5,7 +5,14 @@ import { toast } from 'react-toastify'
 import Avatar from '../ui/Avatar'
 import classes from './PostItem.module.css'
 
-function PostItem({ post, user, isAuthenticated, toggleBookmark, toggleLike }) {
+function PostItem({
+  post,
+  user,
+  isAuthenticated,
+  toggleBookmark,
+  toggleLike,
+  openModal,
+}) {
   const [isLiked, setIsLiked] = useState(
     () => post?.likes?.some((e) => user.email) || false
   )
@@ -39,6 +46,8 @@ function PostItem({ post, user, isAuthenticated, toggleBookmark, toggleLike }) {
     toggleLike({ postId: post.id, email: user.email, isLiked: !isLiked })
   }
 
+  const handleOpenModal = () => openModal(post)
+
   const likeClass = classNames({ fas: isLiked, far: !isLiked }, 'fa-heart')
   const bookmarkClass = classNames(
     { fas: isBookmarked, far: !isBookmarked },
@@ -53,7 +62,7 @@ function PostItem({ post, user, isAuthenticated, toggleBookmark, toggleLike }) {
         <Avatar src={post.user.photoURL} text={post.user.displayName} />
         <h4>{post.user.displayName}</h4>
       </div>
-      <div className={classes.postBody}>
+      <div className={classes.postBody} onClick={handleOpenModal}>
         <img
           src={post.src}
           alt={post.description}
