@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import PostModal from '../components/post/PostModal'
 import Avatar from '../components/ui/Avatar'
 import Container from '../components/ui/Container'
 import {
@@ -13,6 +14,8 @@ import classes from './Profile.module.css'
 
 function Profile() {
   const [tab, setTab] = useState('posts')
+  const [selectedPost, setSelectedPost] = useState(null)
+  const [isOpenModal, setIsOpenModal] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -26,6 +29,16 @@ function Profile() {
     dispatch(getUserBookmarks({ userId: user.id }))
   }, [tab, user, dispatch])
 
+  const handleOpenModal = (post) => () => {
+    setSelectedPost(post)
+    setIsOpenModal(true)
+  }
+
+  const handleCloseModal = () => {
+    setSelectedPost(null)
+    setIsOpenModal(false)
+  }
+
   const handleTabChange = (tabName) => () => setTab(tabName)
 
   const tabClass = (tabName) =>
@@ -36,12 +49,22 @@ function Profile() {
     content = tab === 'posts' ? userPosts : bookmarks
 
     return content.map((post, index) => (
-      <img src={post.src} alt={post.description} key={index} />
+      <img
+        src={post.src}
+        alt={post.description}
+        key={index}
+        onClick={handleOpenModal(post)}
+      />
     ))
   }
 
   return (
     <Container>
+      <PostModal
+        isOpen={isOpenModal}
+        onRequestClose={handleCloseModal}
+        post={selectedPost}
+      />
       <div className={classes.profile}>
         <div className={classes.sideMenu}>
           <div className={classes.sideMenuTop}>

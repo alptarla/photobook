@@ -1,18 +1,20 @@
 import classNames from 'classnames'
 import React, { useEffect, useState } from 'react'
-import Modal from 'react-modal'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPosts, selectPost, toggleLikePost } from '../../store/slices/post'
 import { selectUser, toggleBookmarkPost } from '../../store/slices/user'
 import PostItem from './PostItem'
 import classes from './PostList.module.css'
+import PostModal from './PostModal'
 
 function PostList({ searchTerms, layout, sort }) {
-  const dispatch = useDispatch()
-  const { posts, loading } = useSelector(selectPost)
-  const { user, isAuthenticated } = useSelector(selectUser)
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [selectedPost, setSelectedPost] = useState(null)
+
+  const dispatch = useDispatch()
+
+  const { posts, loading } = useSelector(selectPost)
+  const { user, isAuthenticated } = useSelector(selectUser)
 
   useEffect(() => {
     dispatch(getPosts({ filters: { searchTerms, sort } }))
@@ -26,12 +28,12 @@ function PostList({ searchTerms, layout, sort }) {
     dispatch(toggleLikePost({ isLiked, postId, email }))
   }
 
-  const openModal = (post) => {
+  const handleOpenModal = (post) => {
     setSelectedPost(post)
     setIsOpenModal(true)
   }
 
-  const closeModal = () => {
+  const handleCloseModal = () => {
     setSelectedPost(null)
     setIsOpenModal(false)
   }
@@ -45,20 +47,11 @@ function PostList({ searchTerms, layout, sort }) {
 
   return (
     <div>
-      <Modal
-        className={classes.modal}
+      <PostModal
         isOpen={isOpenModal}
-        onRequestClose={closeModal}
-      >
-        <div className={classes.modalContent}>
-          <img
-            className={classes.modalImage}
-            src={selectedPost?.src}
-            alt={selectedPost?.description}
-          />
-          <i className='fas fa-times' onClick={closeModal} />
-        </div>
-      </Modal>
+        onRequestClose={handleCloseModal}
+        post={selectedPost}
+      />
       <div className={postListClass}>
         {posts.map((post, index) => (
           <PostItem
@@ -68,7 +61,7 @@ function PostList({ searchTerms, layout, sort }) {
             isAuthenticated={isAuthenticated}
             toggleBookmark={handleToggleBookmark}
             toggleLike={handleToggleLike}
-            openModal={openModal}
+            openModal={handleOpenModal}
           />
         ))}
       </div>
